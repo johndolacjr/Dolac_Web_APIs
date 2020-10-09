@@ -4,6 +4,24 @@ const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 
+const username = document.getElementById("username"); 
+const saveScoreBtn = document.getElementById("saveScoreBtn");
+const finalScore = document.getElementById("finalScore");
+const mostRecentScore = localStorage.getItem("mostRecentScore");
+
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+console.log(highScores);
+
+
+// finalScore.innerText = mostRecentScore;
+
+var allButtons = document.querySelectorAll(".btn")
+var score = 0 
+var time = 120
+var timerId = document.getElementById("timer")
+var timer;
+var scoreEl = document.getElementById("score")
+
 let shuffledQuestions, currentQuestionIndex
 
 startButton.addEventListener('click', startGame)
@@ -18,13 +36,38 @@ function startGame() {
     questionContainerElement.classList.remove('hide')
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
+    timer = setInterval(clockTick, 1000)
+    timerId.textContent = time
     setNextQuestion()
+}
+
+function clockTick() {
+    time--
+    timerId.textContent = time
+    // if (time <= 0) {
+    //     //quizEnd() 
+    //     clearInterval(this.timer)
+    // } 
 }
 
 function setNextQuestion() {
     resetState()
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
+// function quizEnd() {
+//     startButton.classList.add('hide')
+//     questionContainerElement.classList.remove('hide')
+
+//     //hide question div - add class of hide (looks like line 23-24)
+
+//     // add a user box to have them type initials, submit button - on click - grab initials and score and put into local storage. 
+
+//     // grab the scores and initials and print into ordered list Create a Div in html (high score div)
+
+// // on quiz end function - hide questionContainerElement... show high scores from HTML div.
+
+// // call quiz end function on timer and when i run out of questions. find logic where the game loops and call the quiz end function. 
+//     }
 
 function showQuestion(question) {
     questionElement.innerText = question.question
@@ -39,7 +82,6 @@ function showQuestion(question) {
         answerButtonsElement.appendChild(button)
     })
 }
-
 function resetState() {
     clearStatusClass(document.body)
     nextButton.classList.add('hide')
@@ -52,6 +94,13 @@ function resetState() {
 function selectAnswer(e) {
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct
+    if (correct) {
+        score+= 1
+        scoreEl.textContent = score
+    } else {
+        time -= 5
+        timerId.textContent=time
+    }
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
@@ -59,9 +108,26 @@ function selectAnswer(e) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
-        startButton.innerText = ('Restart')
+        startButton.innerText = ('Game Over')
+        // on Game Over Click - quizEnd function
         startButton.classList.remove('hide')
     }
+
+    username.addEventListener("keyup", () =>{
+        saveScoreBtn.disabled = !username.value;
+    });
+
+    saveHighScore = e => {
+        console.log("clicked the save button!");
+        e.preventDefault();
+
+        const score = {
+            score: mostRecentScore, 
+            name: username.value
+        };
+        highScores.push(score);
+        console.log(highScores);
+    };
 }
 
 function setStatusClass(element, correct) {
@@ -144,13 +210,7 @@ const questions = [
 
 ]
 
-//  function storedScores ()
 
-
-// When the quiz starts, a countdown timer starts and is displayed
-
-
-// Incorrect answers cause time to be subtracted from the timer
 
 
 // The game ends when all questions have been answered or the timer gets to zero
@@ -158,8 +218,6 @@ const questions = [
 
 // After the game, users can store their high scores in local storage, and can view those high scores by clicking a link
 
-
-// The application only has to resemble the example (a quiz with questions), not be an exact match
 
 
 

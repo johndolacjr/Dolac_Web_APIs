@@ -9,16 +9,17 @@
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
     <script defer src="java.js"></script>
-    <title>Quiz Time!</title>
+    <title>JavaScript Quiz Time!</title>
 </head>
 <body>
     <div class="container">
+        <h1> JavaScript Quiz </h1>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Score</a>
+                <a class="nav-link active" href="#">Score <span id= "score"> 0 </span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Timer <span>0</span></a>
+                <a class="nav-link" href="#">Timer <span id="timer">0</span></a>
             </li>
         </ul>
 
@@ -34,9 +35,17 @@
         <div class="controls">
             <button id="start-btn" class="start-btn btn">Start</button>
             <button id="next-btn" class="next-btn btn hide">Next</button>
+            <button id="highscores-btn" class="highscores-btn btn hide" href="/highscores.html">High Scores</button>
         </div>
     </div>
-</body>
+
+        <!-- <div class="container">
+            <div id="home" class="flex-center flex-column">
+                <a class="btn" href="/highscores.html">High Scores</a>
+
+            </div>
+    </div> -->
+    </body>
 </html>
 
 
