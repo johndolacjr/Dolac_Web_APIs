@@ -1,16 +1,17 @@
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
+const highScoresButton = document.getElementById('highscores-btn')
 const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 
-const username = document.getElementById("username"); 
-const saveScoreBtn = document.getElementById("saveScoreBtn");
-const finalScore = document.getElementById("finalScore");
-const mostRecentScore = localStorage.getItem("mostRecentScore");
+// const username = document.getElementById("username"); 
+// const saveScoreBtn = document.getElementById("saveScoreBtn");
+// const finalScore = document.getElementById("finalScore");
+// const mostRecentScore = localStorage.getItem("mostRecentScore");
 
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-console.log(highScores);
+// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+// console.log(highScores);
 
 
 // finalScore.innerText = mostRecentScore;
@@ -28,6 +29,7 @@ startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
     currentQuestionIndex++
     setNextQuestion()
+highScoresButton.addEventListener('click', stopGame)
 })
 
 function startGame() {
@@ -54,9 +56,22 @@ function setNextQuestion() {
     resetState()
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
-// function quizEnd() {
-//     startButton.classList.add('hide')
-//     questionContainerElement.classList.remove('hide')
+
+function stopGame() {
+    startButton.classList.add('hide')
+    questionContainerElement.classList.add('hide')
+    nextButton.classList.add('hide')
+    highScoresButton.classList.remove('hide')
+}
+
+
+
+
+//     if highScoresButton.innerText = ('Game Over')
+//     // highScoresButton.classList.remove('hide')
+// } else { 
+//     return window.location.assign("/highscores.html");
+// }
 
 //     //hide question div - add class of hide (looks like line 23-24)
 
@@ -98,36 +113,47 @@ function selectAnswer(e) {
         score+= 1
         scoreEl.textContent = score
     } else {
-        time -= 5
+        time -= 10
         timerId.textContent=time
     }
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })
+
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
-        startButton.innerText = ('Game Over')
-        // on Game Over Click - quizEnd function
-        startButton.classList.remove('hide')
+        stopGame()
+        // highScoresButton.innerText = ('Game Over')
+        // // on Game Over Click - quizEnd function
+        // highScoresButton.classList.remove('hide')
     }
 
-    username.addEventListener("keyup", () =>{
-        saveScoreBtn.disabled = !username.value;
-    });
+    if (questionElement.length === 0 || time === 0) {
+        //go to high score page
+    return window.location.assign("/highscores.html");
+    }
 
-    saveHighScore = e => {
-        console.log("clicked the save button!");
-        e.preventDefault();
+    
 
-        const score = {
-            score: mostRecentScore, 
-            name: username.value
-        };
-        highScores.push(score);
-        console.log(highScores);
-    };
+
+
+    // username.addEventListener("keyup", () =>{
+    //     saveScoreBtn.disabled = !username.value;
+    // });
+
+    // saveHighScore = e => {
+    //     console.log("clicked the save button!");
+    //     e.preventDefault();
+
+    //     const score = {
+    //         score: mostRecentScore, 
+    //         name: username.value
+    //     };
+    //     highScores.push(score);
+    //     console.log(highScores);
+    // };
 }
 
 function setStatusClass(element, correct) {
@@ -144,6 +170,7 @@ function clearStatusClass(element) {
     element.classList.remove('wrong')
 }
 
+// QUESTIONS
 const questions = [
     {
         question: 'How doeas a FOR loop start?',
@@ -215,117 +242,5 @@ const questions = [
 
 // The game ends when all questions have been answered or the timer gets to zero
 
-
 // After the game, users can store their high scores in local storage, and can view those high scores by clicking a link
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var questions = [
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-//     {
-//         prompt: 'How doeas a FOR loop start?\n(a) for (i<=5; i++)\n\ (b) for (i = 0; <=5; i++)\n(c) for i = 1 to 5\n(d) for (i = 0; i <=5)',
-//         answer: 'b'
-//     },
-// ];
-
-// var score = 0;
-
-// for (var i=0; i < questions.length; i++){
-//     var response = window.prompt(questions[i].prompt); 
-//     if (response === questions[i]).answer){
-//         score++;
-//         alert("Correctamondo!!");
-//     } 
-    
-//     else {
-//         alert("Womp Womp");
-//     }
-// }
-// alert ("You got " + score + "/" + questions.length);
-
-
-        
-        
-        
-// //= document.getElementById(mainContent); 
-
-// // var questionsArray = [
-// //     {
-// //         q1: 'How doeas a FOR loop start?',
-// //         answers: ['for (i<=5; i++)', 'for (i = 0; <=5; i++)', 'for i = 1 to 5', 'for (i = 0; i <=5)'],
-// //         correctAnswer: 'for (i = 0; <=5; i++)',
-// //     },
-    
-// //     {
-// //         q2: 'How doeas a FOR loop start?',
-// //         answers: ['for (i<=5; i++)', 'for (i = 0; <=5; i++)', 'for i = 1 to 5', 'for (i = 0; i <=5)'],
-// //         correctAnswer: 'for (i = 0; <=5; i++)',
-// //     },
-    
-// //     {
-// //         q3: 'How doeas a FOR loop start?',
-// //         answers: ['for (i<=5; i++)', 'for (i = 0; <=5; i++)', 'for i = 1 to 5', 'for (i = 0; i <=5)'],
-// //         correctAnswer: 'for (i = 0; <=5; i++)',
-// //     },
-    
-// //     {
-// //         q4: 'How doeas a FOR loop start?',
-// //         answers: ['for (i<=5; i++)', 'for (i = 0; <=5; i++)', 'for i = 1 to 5', 'for (i = 0; i <=5)'],
-// //         correctAnswer: 'for (i = 0; <=5; i++)',
-// //     },
-// // ]; 
-
-
-// // I need to display the questions w/ random answers
-// var questionHtml = "questionArray",
-// content.innerHTML = questionHtml,
-
-
-// //need a function to check the user selection w/ 
-
-// // display a message if correct. If incorrect decremeant time and state its wrong
-
-// //game ends when timer hits Zero or no more questions are left 
