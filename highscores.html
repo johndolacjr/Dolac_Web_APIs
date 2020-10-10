@@ -5,16 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link href="/index.html">
+    <link href="file:///C:/Users/johnd/Documents/bootcamp/Dolac_Web_APIs/index.html?">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
     <script defer src="java.js"></script>
 
 
-    <title>Document</title>
+    <title>High Score</title>
+
 </head>
 <body>
+    <div class="container">
+        <h1>High Scores</h1>
+        <div id="end" class="flex-center flex-column">
+            <h1 id="finalScore">0</h1>
+            <form>
+                <input
+                type="text"
+                userName= "initials"
+                id="username"
+                placeholder="username"
+                />
+                <button 
+                type="submit" 
+                class="btn" 
+                id="saveScoreBtn" 
+                onclick="saveHighScore(event)">
+                Save
+                </button>
+            </form>
+        </div>
+    </div>
     
 </body>
 </html>

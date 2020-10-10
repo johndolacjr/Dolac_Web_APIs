@@ -1,77 +1,61 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const highScoresButton = document.getElementById('highscores-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
+const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
+const highScoresButton = document.getElementById('highscores-btn');
+const questionContainerElement = document.getElementById('question-container');
+const questionElement = document.getElementById('question');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const highScoresElement = document.getElementById('high-scores')
 
-// const username = document.getElementById("username"); 
-// const saveScoreBtn = document.getElementById("saveScoreBtn");
-// const finalScore = document.getElementById("finalScore");
-// const mostRecentScore = localStorage.getItem("mostRecentScore");
-
-// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-// console.log(highScores);
-
-
-// finalScore.innerText = mostRecentScore;
-
-var allButtons = document.querySelectorAll(".btn")
-var score = 0 
-var time = 120
-var timerId = document.getElementById("timer")
+var allButtons = document.querySelectorAll(".btn");
+var score = 0;
+var time = 90;
+var timerId = document.getElementById("timer");
 var timer;
-var scoreEl = document.getElementById("score")
+var scoreEl = document.getElementById("score");
 
-let shuffledQuestions, currentQuestionIndex
+let shuffledQuestions, currentQuestionIndex;
 
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
-    currentQuestionIndex++
-    setNextQuestion()
-highScoresButton.addEventListener('click', stopGame)
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
+    currentQuestionIndex++;
+    setNextQuestion();
+highScoresButton.addEventListener("click", stopGame);
 })
 
 function startGame() {
-    console.log('Started')
-    startButton.classList.add('hide')
-    questionContainerElement.classList.remove('hide')
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
-    currentQuestionIndex = 0
-    timer = setInterval(clockTick, 1000)
-    timerId.textContent = time
-    setNextQuestion()
+    console.log("Started");
+    startButton.classList.add("hide");
+    // highScoresElement.classList.add("hide");
+    questionContainerElement.classList.remove("hide");
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
+    currentQuestionIndex = 0;
+    timer = setInterval(clockTick, 1000);
+    timerId.textContent = time;
+    setNextQuestion();
 }
 
 function clockTick() {
-    time--
-    timerId.textContent = time
-    // if (time <= 0) {
-    //     //quizEnd() 
-    //     clearInterval(this.timer)
-    // } 
+    time--;
+    timerId.textContent = time;
+    if (time <= 0) {
+        clearInterval(timer);
+        stopGame();
+    } 
 }
 
 function setNextQuestion() {
-    resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
+    resetState();
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 function stopGame() {
-    startButton.classList.add('hide')
-    questionContainerElement.classList.add('hide')
-    nextButton.classList.add('hide')
-    highScoresButton.classList.remove('hide')
-}
+    // highScoresElement.classList.remove("hide");
+    highScoresButton.classList.remove("hide");
+    startButton.classList.add("hide");
+    questionContainerElement.classList.add("hide");
+    nextButton.classList.add("hide");    
+} 
 
-
-
-
-//     if highScoresButton.innerText = ('Game Over')
-//     // highScoresButton.classList.remove('hide')
-// } else { 
-//     return window.location.assign("/highscores.html");
-// }
 
 //     //hide question div - add class of hide (looks like line 23-24)
 
@@ -82,24 +66,24 @@ function stopGame() {
 // // on quiz end function - hide questionContainerElement... show high scores from HTML div.
 
 // // call quiz end function on timer and when i run out of questions. find logic where the game loops and call the quiz end function. 
-//     }
 
 function showQuestion(question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
-        const button = document.createElement('button')
+        const button = document.createElement("button")
         button.innerText = answer.text
-        button.classList.add('btn')
+        button.classList.add("btn")
         if (answer.correct) {
             button.dataset.correct = answer.correct
         }
-        button.addEventListener('click', selectAnswer)
+        button.addEventListener("click", selectAnswer)
         answerButtonsElement.appendChild(button)
     })
 }
+
 function resetState() {
     clearStatusClass(document.body)
-    nextButton.classList.add('hide')
+    nextButton.classList.add("hide")
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild
         (answerButtonsElement.firstChild)
@@ -116,59 +100,77 @@ function selectAnswer(e) {
         time -= 10
         timerId.textContent=time
     }
+
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })
 
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove('hide')
+        nextButton.classList.remove("hide")
     } else {
         stopGame()
-        // highScoresButton.innerText = ('Game Over')
-        // // on Game Over Click - quizEnd function
-        // highScoresButton.classList.remove('hide')
     }
-
-    if (questionElement.length === 0 || time === 0) {
-        //go to high score page
-    return window.location.assign("/highscores.html");
-    }
-
-    
-
-
-
-    // username.addEventListener("keyup", () =>{
-    //     saveScoreBtn.disabled = !username.value;
-    // });
-
-    // saveHighScore = e => {
-    //     console.log("clicked the save button!");
-    //     e.preventDefault();
-
-    //     const score = {
-    //         score: mostRecentScore, 
-    //         name: username.value
-    //     };
-    //     highScores.push(score);
-    //     console.log(highScores);
-    // };
 }
 
 function setStatusClass(element, correct) {
     clearStatusClass(element)
     if (correct) {
-        element.classList.add('correct')
+        element.classList.add("correct")
     } else {
-        element.classList.add('wrong')
+        element.classList.add("wrong")
     }
 }
 
 function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
+    element.classList.remove("correct")
+    element.classList.remove("wrong")
 }
+
+//SCORE
+
+function seeHighScores () {
+    highScoresButton.on(click, (function(e){
+        window.location.href = "file:///C:/Users/johnd/Documents/bootcamp/Dolac_Web_APIs/highscores.html?";    
+    }));
+        
+
+}
+// const name = document.getElementById("userName");
+// const saveScoreBtn = document.getElementById("saveScoreBtn");
+// const finalScore = document.getElementById("finalScore");
+// const mostRecentScore = localStorage.getItem("mostRecentScore");
+// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+// const maxHighScores = 5;
+
+
+// highScores.map(score => {
+//     return '<li class="high-score">${score.name}-${score.score}</li>';
+// })
+
+// finalScore.innerText = mostRecentScore;
+
+// localStorage.setItem("mostRecentScore", score);
+
+// username.addEventListener("key", () => {
+//     saveScoreBtn.disabled = !username.value;
+// })
+
+// saveHighScore = e => {
+//     console.log("userInitials");
+//     e.preventDefault();
+
+// const score = {
+//     score: Math.floor(Math.random()*100),
+//     name: name.value.finalScore
+//     }
+//     highScores.push(score);
+//     highScores.sort( (a,b) => b.score - a.score);
+//     highScores.splice(5);
+
+//     localStorage.setItem("highScores", JSON.stringify(highScores))
+// }
+
 
 // QUESTIONS
 const questions = [
