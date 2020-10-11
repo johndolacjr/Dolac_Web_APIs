@@ -121,43 +121,40 @@ function clearStatusClass(element) {
 
 
 // SCORE //
-const name = document.getElementById("userName");
-const seeHighScores = document.getElementById('highscores-btn');
-const saveScoreBtn = document.getElementById("saveScoreBtn");
+// const name = document.getElementById("userName");
+// const seeHighScores = document.getElementById('highscores-btn');
+// const saveScoreBtn = document.getElementById("saveScoreBtn");
+// const finalScore = document.getElementById("finalScore");
+// const mostRecentScore = localStorage.getItem("mostRecentScore");
+// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+// const maxHighScores = 5;
 
-const finalScore = document.getElementById("finalScore");
-const mostRecentScore = localStorage.getItem("mostRecentScore");
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-const maxHighScores = 5;
+// highScores.map(score => {
+//     return '<li class="high-score">${score.name}-${score.score}</li>';
+// })
 
-highScores.map(score => {
-    return '<li class="high-score">${score.name}-${score.score}</li>';
-})
+// finalScore.innerText = mostRecentScore;
 
-finalScore.innerText = mostRecentScore;
+// localStorage.setItem("mostRecentScore", score);
 
-localStorage.setItem("mostRecentScore", score);
+// username.addEventListener("key", () => {
+//     saveScoreBtn.disabled = !username.value;
+// })
 
-username.addEventListener("key", () => {
-    saveScoreBtn.disabled = !username.value;
-})
+// saveHighScore = e => {
+//     console.log("userInitials");
+//     e.preventDefault();
 
-saveHighScore = e => {
-    console.log("userInitials");
-    e.preventDefault();
+// const score = {
+//     score: Math.floor(Math.random()*100),
+//     name: name.value.finalScore
+//     }
+//     highScores.push(score);
+//     highScores.sort( (a,b) => b.score - a.score);
+//     highScores.splice(5);
 
-const score = {
-    score: Math.floor(Math.random()*100),
-    name: name.value.finalScore
-    }
-    highScores.push(score);
-    highScores.sort( (a,b) => b.score - a.score);
-    highScores.splice(5);
-
-    localStorage.setItem("highScores", JSON.stringify(highScores))
-}
-
-
+//     localStorage.setItem("highScores", JSON.stringify(highScores))
+// }
 
 
 
