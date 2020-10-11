@@ -71,7 +71,7 @@ body.wrong {
     --hue: var(--hue-wrong);
 }
 
-.start-btn, .next-btn, .highscores-btn, .savescores-btn {
+.start-btn, .next-btn, .highscores-btn {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;

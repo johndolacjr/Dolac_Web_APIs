@@ -117,6 +117,9 @@ function clearStatusClass(element) {
 
 
 
+
+
+
 // SCORE //
 // const name = document.getElementById("userName");
 // const seeHighScores = document.getElementById('highscores-btn');
