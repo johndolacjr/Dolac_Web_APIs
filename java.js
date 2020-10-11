@@ -4,7 +4,6 @@ const highScoresButton = document.getElementById('highscores-btn');
 const questionContainerElement = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
 const answerButtonsElement = document.getElementById('answer-buttons');
-const highScoresElement = document.getElementById('high-scores')
 
 var allButtons = document.querySelectorAll(".btn");
 var score = 0;
@@ -25,7 +24,6 @@ highScoresButton.addEventListener("click", stopGame);
 function startGame() {
     console.log("Started");
     startButton.classList.add("hide");
-    // highScoresElement.classList.add("hide");
     questionContainerElement.classList.remove("hide");
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
@@ -40,7 +38,7 @@ function clockTick() {
     if (time <= 0) {
         clearInterval(timer);
         stopGame();
-    } 
+    }
 }
 
 function setNextQuestion() {
@@ -49,23 +47,12 @@ function setNextQuestion() {
 }
 
 function stopGame() {
-    // highScoresElement.classList.remove("hide");
     highScoresButton.classList.remove("hide");
+    saveScoreBtn.classList.remove("hide");
     startButton.classList.add("hide");
     questionContainerElement.classList.add("hide");
-    nextButton.classList.add("hide");    
+    nextButton.classList.add("hide");
 } 
-
-
-//     //hide question div - add class of hide (looks like line 23-24)
-
-//     // add a user box to have them type initials, submit button - on click - grab initials and score and put into local storage. 
-
-//     // grab the scores and initials and print into ordered list Create a Div in html (high score div)
-
-// // on quiz end function - hide questionContainerElement... show high scores from HTML div.
-
-// // call quiz end function on timer and when i run out of questions. find logic where the game loops and call the quiz end function. 
 
 function showQuestion(question) {
     questionElement.innerText = question.question
@@ -109,7 +96,7 @@ function selectAnswer(e) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide")
     } else {
-        stopGame()
+        stopGame();
     }
 }
 
@@ -127,52 +114,55 @@ function clearStatusClass(element) {
     element.classList.remove("wrong")
 }
 
-//SCORE
 
-function seeHighScores () {
-    highScoresButton.on(click, (function(e){
-        window.location.href = "file:///C:/Users/johnd/Documents/bootcamp/Dolac_Web_APIs/highscores.html?";    
-    }));
-        
 
+
+
+
+
+// SCORE //
+const name = document.getElementById("userName");
+const seeHighScores = document.getElementById('highscores-btn');
+const saveScoreBtn = document.getElementById("saveScoreBtn");
+
+const finalScore = document.getElementById("finalScore");
+const mostRecentScore = localStorage.getItem("mostRecentScore");
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+const maxHighScores = 5;
+
+highScores.map(score => {
+    return '<li class="high-score">${score.name}-${score.score}</li>';
+})
+
+finalScore.innerText = mostRecentScore;
+
+localStorage.setItem("mostRecentScore", score);
+
+username.addEventListener("key", () => {
+    saveScoreBtn.disabled = !username.value;
+})
+
+saveHighScore = e => {
+    console.log("userInitials");
+    e.preventDefault();
+
+const score = {
+    score: Math.floor(Math.random()*100),
+    name: name.value.finalScore
+    }
+    highScores.push(score);
+    highScores.sort( (a,b) => b.score - a.score);
+    highScores.splice(5);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores))
 }
-// const name = document.getElementById("userName");
-// const saveScoreBtn = document.getElementById("saveScoreBtn");
-// const finalScore = document.getElementById("finalScore");
-// const mostRecentScore = localStorage.getItem("mostRecentScore");
-// const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-// const maxHighScores = 5;
 
 
-// highScores.map(score => {
-//     return '<li class="high-score">${score.name}-${score.score}</li>';
-// })
-
-// finalScore.innerText = mostRecentScore;
-
-// localStorage.setItem("mostRecentScore", score);
-
-// username.addEventListener("key", () => {
-//     saveScoreBtn.disabled = !username.value;
-// })
-
-// saveHighScore = e => {
-//     console.log("userInitials");
-//     e.preventDefault();
-
-// const score = {
-//     score: Math.floor(Math.random()*100),
-//     name: name.value.finalScore
-//     }
-//     highScores.push(score);
-//     highScores.sort( (a,b) => b.score - a.score);
-//     highScores.splice(5);
-
-//     localStorage.setItem("highScores", JSON.stringify(highScores))
-// }
 
 
-// QUESTIONS
+
+
+// QUESTIONS //
 const questions = [
     {
         question: 'How doeas a FOR loop start?',
@@ -239,10 +229,6 @@ const questions = [
 
 ]
 
-
-
-
-// The game ends when all questions have been answered or the timer gets to zero
 
 // After the game, users can store their high scores in local storage, and can view those high scores by clicking a link
 

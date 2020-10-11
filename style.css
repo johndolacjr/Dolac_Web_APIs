@@ -30,7 +30,7 @@ body.wrong {
     --hue: var(--hue-wrong);
 }
 
-.container {
+.container, .container2 {
     width: 800px;
     max-width: 80%;
     background-color: lightgray; 
@@ -71,7 +71,7 @@ body.wrong {
     --hue: var(--hue-wrong);
 }
 
-.start-btn, .next-btn, .highscores-btn {
+.start-btn, .next-btn, .highscores-btn, .savescores-btn {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
